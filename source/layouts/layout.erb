@@ -105,7 +105,17 @@ under the License.
               <% if lang.is_a? Hash %>
                 <a href="#" data-language-name="<%= lang.keys.first %>"><%= lang.values.first %></a>
               <% else %>
-                <a href="#" data-language-name="<%= lang %>"><%= lang %></a>
+                <a href="#" data-language-name="<%= lang %>">
+                  <% if lang == "shell" %> 
+                    cURL
+                  <% elsif lang == "javascript" %>
+                    Javascript
+                  <% elsif lang == "python" %>
+                    Python
+                  <% elsif lang == "ruby" %>  
+                    Ruby
+                  <% end %>
+                </a>
               <% end %>
             <% end %>
           </div>
