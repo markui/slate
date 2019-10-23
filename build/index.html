@@ -233,6 +233,9 @@
                   <li>
                     <a href="#authentication" class="toc-h2 toc-link" data-title="Authentication">Authentication</a>
                   </li>
+                  <li>
+                    <a href="#error-handling" class="toc-h2 toc-link" data-title="Error Handling">Error Handling</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -244,15 +247,21 @@
               </ul>
           </li>
           <li>
-            <a href="#credits" class="toc-h1 toc-link" data-title="Credits">Credits</a>
-          </li>
-          <li>
             <a href="#examples" class="toc-h1 toc-link" data-title="Examples">Examples</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#example" class="toc-h2 toc-link" data-title="Example">Example</a>
+                    <a href="#example-1" class="toc-h2 toc-link" data-title="Example 1">Example 1</a>
+                  </li>
+                  <li>
+                    <a href="#example-2" class="toc-h2 toc-link" data-title="Example 2">Example 2</a>
+                  </li>
+                  <li>
+                    <a href="#example-3" class="toc-h2 toc-link" data-title="Example 3">Example 3</a>
                   </li>
               </ul>
+          </li>
+          <li>
+            <a href="#credits" class="toc-h1 toc-link" data-title="Credits">Credits</a>
           </li>
           <li>
             <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
@@ -303,11 +312,13 @@ PDFSwitch provides a simple and robust REST-ful API to integrate HTML to PDF con
 <aside class="notice">
 You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 </aside>
-<h1 id='conversion'>Conversion</h1><h2 id='convert-to-pdf'>Convert to PDF</h2>
+<h2 id='error-handling'>Error Handling</h2><h1 id='conversion'>Conversion</h1><h2 id='convert-to-pdf'>Convert to PDF</h2>
 <p>This is the main endpoint of PDFSwitch&#39;s API. Simply pass your raw HTML OR URL to us and get a PDF in return.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://pdfswitch.com/api/v1/convert</code></p>
 <h3 id='body-parameters'>BODY Parameters</h3>
+<p>All parameters should be passed as a JSON object. We grouped the parameters into sections by their main usage.</p>
+<h4 id='1-main-options'>1. Main Options</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -361,17 +372,17 @@ You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 <tr>
 <td>margins</td>
 <td>string</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>0</td>
+<td>CSS style margin sizes. Use it to give space between the limits of the document and captured content. For example, <code>1px 2px 3px 4px</code> would cause <code>1px</code> top, <code>2px</code> right, <code>3px</code> bottom <code>4px</code> left margins. See below for more details.<br><b>Example: </b><code>20px 30px</code></td>
 </tr>
 <tr>
 <td>zoom</td>
 <td>number</td>
 <td>1</td>
-<td>Allows you to increase the zoom in the document. <strong>It should be a float value between 0.1 and 2.</strong> <br>For example, the default 1 means 100% zoom(original state) on the document, 2 means 200% zoom, 0.1 means 10% zoom and so on.</td>
+<td>Allows you to increase the zoom in the document. <strong>It should be a float value between 0.1 and 2.</strong> <br>Value larger than 1 means zooming in(larger), smaller than 1 means zooming out(smaller).<br>For example, the default 1 means 100% zoom(original state) on the document, 2 means 200% zoom(zoom in), 0.1 means 10% zoom(zoom out) and so on.</td>
 </tr>
 </tbody></table>
-
+<h4 id='2-injection-options'>2. Injection Options</h4>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -381,19 +392,127 @@ You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-<td></td>
+<td>css</td>
+<td>string(raw HTML or URL)</td>
+<td><b>required</b></td>
+<td>The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b><code>https://example.com</code><br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b><code>&lt;html&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/html&gt;</code></td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
-<td></td>
+<td>javascript</td>
+<td>string</td>
+<td>null</td>
+<td>Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code></td>
+</tr>
+<tr>
+<td>custom_header</td>
+<td>string</td>
+<td>null</td>
+<td>Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code></td>
+</tr>
+<tr>
+<td>custom_footer</td>
+<td>string</td>
+<td>null</td>
+<td>Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code></td>
 </tr>
 </tbody></table>
-<h1 id='credits'>Credits</h1><h1 id='examples'>Examples</h1><h2 id='example'>Example</h2>
+<h4 id='3-disable-options'>3. Disable Options</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>disable_images</td>
+<td>string(raw HTML or URL)</td>
+<td><b>required</b></td>
+<td>The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b><code>https://example.com</code><br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b><code>&lt;html&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/html&gt;</code></td>
+</tr>
+<tr>
+<td>disable_javascript</td>
+<td>string</td>
+<td>null</td>
+<td>Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code></td>
+</tr>
+<tr>
+<td>disable_links</td>
+<td>string</td>
+<td>null</td>
+<td>Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code></td>
+</tr>
+<tr>
+<td>disable_backgrounds</td>
+<td>string</td>
+<td>null</td>
+<td>Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code></td>
+</tr>
+</tbody></table>
+<h4 id='4-delay-options'>4. Delay Options</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>delay</td>
+<td>string(raw HTML or URL)</td>
+<td><b>required</b></td>
+<td>The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b><code>https://example.com</code><br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b><code>&lt;html&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/html&gt;</code></td>
+</tr>
+<tr>
+<td>wait_for_selector</td>
+<td>string</td>
+<td>null</td>
+<td>Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code></td>
+</tr>
+<tr>
+<td>wait_for_function</td>
+<td>string</td>
+<td>null</td>
+<td>Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code></td>
+</tr>
+</tbody></table>
+<h4 id='5-request-options'>5. Request Options</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>http_headers</td>
+<td>string(raw HTML or URL)</td>
+<td><b>required</b></td>
+<td>The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b><code>https://example.com</code><br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b><code>&lt;html&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/html&gt;</code></td>
+</tr>
+</tbody></table>
+<h4 id='6-storage-options'>6. Storage Options</h4>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>filename</td>
+<td>string(raw HTML or URL)</td>
+<td><b>required</b></td>
+<td>The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b><code>https://example.com</code><br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b><code>&lt;html&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/html&gt;</code></td>
+</tr>
+</tbody></table>
+<h3 id='margins'>Margins</h3><h3 id='custom-headers-footers'>Custom Headers/Footers</h3><h1 id='examples'>Examples</h1>
+<p>We have provided examples of how to perform PDF conversions using our API in various use cases.<br>Please report problems or request new examples via <a href="mailto:support@pdfswitch.io">support@pdfswitch.io</a>.</p>
+<h2 id='example-1'>Example 1</h2><h2 id='example-2'>Example 2</h2><h2 id='example-3'>Example 3</h2><h1 id='credits'>Credits</h1>
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>

@@ -46,6 +46,8 @@ PDFSwitch expects the API key to be included in all API requests to the server v
 You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 </aside>
 
+## Error Handling
+
 # Conversion
 
 ## Convert to PDF
@@ -58,6 +60,10 @@ This is the main endpoint of PDFSwitch's API. Simply pass your raw HTML OR URL t
 
 ### BODY Parameters
 
+All parameters should be passed as a JSON object. We grouped the parameters into sections by their main usage.
+
+#### 1. Main Options
+
 | Parameter        | Type                    | Default         | Description                                                                                                                                                                                                                                                                                                                                                                                     |
 | ---------------- | ----------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | source           | string(raw HTML or URL) | <b>required</b> | The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b>`https://example.com`<br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b>`<html><h1>Test</h1></html>`                                                                                                                         |
@@ -67,19 +73,62 @@ This is the main endpoint of PDFSwitch's API. Simply pass your raw HTML OR URL t
 | page_width       | string                  | null            | Custom pdf page width. Use it together with custom `page_height`. <br>Unit can be one of <code>px&#124;in&#124;mm&#124;cm</code>.<br><b>Pattern: </b><code>NUM[px&#124;in&#124;mm&#124;cm]</code><br><b>Example: </b><code>600px</code><aside class="warning">Cannot be used together with `page_format`. Prefer to use `page_format` if you don't have an exact page size requirement.</aside> |
 | page_height      | string                  | null            | Custom pdf page width. Use it together with custom `page_width`. <br>Unit can be one of <code>px&#124;in&#124;mm&#124;cm</code>.<br><b>Pattern: </b><code>NUM[px&#124;in&#124;mm&#124;cm]</code><br><b>Example: </b><code>600px</code><aside class="warning">Cannot be used together with `page_format`. Prefer to use `page_format` if you don't have an exact page size requirement.</aside>  |
 | emulate_media    | string                  | screen          | Force CSS media emulation for print or screen.<br><b>Pattern: </b><code>screen&#124;print</code>                                                                                                                                                                                                                                                                                                |
-| margins          | string                  | true            | If set to false, the result will include kittens that have already been adopted.                                                                                                                                                                                                                                                                                                                |
-| zoom             | number                  | 1               | Allows you to increase the zoom in the document. **It should be a float value between 0.1 and 2.** <br>For example, the default 1 means 100% zoom(original state) on the document, 2 means 200% zoom, 0.1 means 10% zoom and so on.                                                                                                                                                             |
+| margins          | string                  | 0               | CSS style margin sizes. Use it to give space between the limits of the document and captured content. For example, `1px 2px 3px 4px` would cause `1px` top, `2px` right, `3px` bottom `4px` left margins. See below for more details.<br><b>Example: </b><code>20px 30px</code>                                                                                                                 |
+| zoom             | number                  | 1               | Allows you to increase the zoom in the document. **It should be a float value between 0.1 and 2.** <br>Value larger than 1 means zooming in(larger), smaller than 1 means zooming out(smaller).<br>For example, the default 1 means 100% zoom(original state) on the document, 2 means 200% zoom(zoom in), 0.1 means 10% zoom(zoom out) and so on.                                              |
 
-| Parameter    | Type  | Default                                                                          | Description |
-| ------------ | ----- | -------------------------------------------------------------------------------- | ----------- |
-| include_cats | false | If set to true, the result will also include cats.                               |
-| available    | true  | If set to false, the result will include kittens that have already been adopted. |
+#### 2. Injection Options
 
-# Credits
+| Parameter     | Type                    | Default         | Description                                                                                                                                                                                                                                                             |
+| ------------- | ----------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| css           | string(raw HTML or URL) | <b>required</b> | The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b>`https://example.com`<br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b>`<html><h1>Test</h1></html>` |
+| javascript    | string                  | null            | Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code>                                                                                                                                 |
+| custom_header | string                  | null            | Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code>                                                                                                                                 |
+| custom_footer | string                  | null            | Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code>                                                                                                                                 |
+
+#### 3. Disable Options
+
+| Parameter           | Type                    | Default         | Description                                                                                                                                                                                                                                                             |
+| ------------------- | ----------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| disable_images      | string(raw HTML or URL) | <b>required</b> | The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b>`https://example.com`<br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b>`<html><h1>Test</h1></html>` |
+| disable_javascript  | string                  | null            | Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code>                                                                                                                                 |
+| disable_links       | string                  | null            | Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code>                                                                                                                                 |
+| disable_backgrounds | string                  | null            | Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code>                                                                                                                                 |
+
+#### 4. Delay Options
+
+| Parameter         | Type                    | Default         | Description                                                                                                                                                                                                                                                             |
+| ----------------- | ----------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| delay             | string(raw HTML or URL) | <b>required</b> | The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b>`https://example.com`<br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b>`<html><h1>Test</h1></html>` |
+| wait_for_selector | string                  | null            | Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code>                                                                                                                                 |
+| wait_for_function | string                  | null            | Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code>                                                                                                                                 |
+
+#### 5. Request Options
+
+| Parameter    | Type                    | Default         | Description                                                                                                                                                                                                                                                             |
+| ------------ | ----------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| http_headers | string(raw HTML or URL) | <b>required</b> | The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b>`https://example.com`<br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b>`<html><h1>Test</h1></html>` |
+
+#### 6. Storage Options
+
+| Parameter | Type                    | Default         | Description                                                                                                                                                                                                                                                             |
+| --------- | ----------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| filename  | string(raw HTML or URL) | <b>required</b> | The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b>`https://example.com`<br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b>`<html><h1>Test</h1></html>` |
+
+### Margins
+
+### Custom Headers/Footers
 
 # Examples
 
-## Example
+We have provided examples of how to perform PDF conversions using our API in various use cases.<br>Please report problems or request new examples via <support@pdfswitch.io>.
+
+## Example 1
+
+## Example 2
+
+## Example 3
+
+# Credits
 
 > To authorize, use this code:
 
