@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>Documentation</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -222,10 +222,37 @@
         <ul class="search-results"></ul>
       <ul id="toc" class="toc-list-h1">
           <li>
-            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+            <a href="#getting-started" class="toc-h1 toc-link" data-title="Getting Started">Getting Started</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
+                  </li>
+                  <li>
+                    <a href="#getting-an-api-key" class="toc-h2 toc-link" data-title="Getting an API Key">Getting an API Key</a>
+                  </li>
+                  <li>
+                    <a href="#authentication" class="toc-h2 toc-link" data-title="Authentication">Authentication</a>
+                  </li>
+              </ul>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+            <a href="#conversion" class="toc-h1 toc-link" data-title="Conversion">Conversion</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#convert-to-pdf" class="toc-h2 toc-link" data-title="Convert to PDF">Convert to PDF</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#credits" class="toc-h1 toc-link" data-title="Credits">Credits</a>
+          </li>
+          <li>
+            <a href="#examples" class="toc-h1 toc-link" data-title="Examples">Examples</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#example" class="toc-h2 toc-link" data-title="Example">Example</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
@@ -246,20 +273,127 @@
           </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
+            <li><a href='https://pdfswitch.io/signup'>Signup for PDFSwitch</a></li>
+            <li><support@pdfswitch.io></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the PDFSwitch API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+        <h1 id='getting-started'>Getting Started</h1><h2 id='overview'>Overview</h2>
+<p>Welcome to PDFSwitch!
+PDFSwitch provides a simple and robust REST-ful API to integrate HTML to PDF conversion technology into your existing applications and services.</p>
 
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>The PDFSwitch API enables the following operations:</p>
 
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
+<ul>
+<li>Conversion of raw HTML/URL to PDF documents</li>
+<li>Get result PDF in binary format OR saved in AWS S3 storage</li>
+<li>Customization of your PDF with css, javascript, headers/footers and much more</li>
+</ul>
+
+<p>If you have further questions or feedback you would like to share, always feel free to contact us at <a href="mailto:support@pdfswitch.io">support@pdfswitch.io</a>. We would love to hear from you :)</p>
+<h2 id='getting-an-api-key'>Getting an API Key</h2>
+<p>PDFSwitch uses API keys to allow access to the API. You can find your API keys on your <a href="https://pdfswitch.io/dashboard">Dashboad</a>, which you can access by <a href="https://pdfswitch.io/login">logging in</a> or <a href="https://pdfswitch.io/signup">signing up</a>.</p>
+<h2 id='authentication'>Authentication</h2>
+<p>PDFSwitch expects the API key to be included in all API requests to the server via <a href="https://tools.ietf.org/html/rfc6750">HTTP Bearer Auth Scheme</a>. Provide your API key in the <code>Authorization</code> header with the <code>Bearer</code> authentication scheme.</p>
+
+<p><code>Authorization: Bearer YOUR_PDFSWITCH_API_KEY</code></p>
+
+<aside class="notice">
+You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
+</aside>
+<h1 id='conversion'>Conversion</h1><h2 id='convert-to-pdf'>Convert to PDF</h2>
+<p>This is the main endpoint of PDFSwitch&#39;s API. Simply pass your raw HTML OR URL to us and get a PDF in return.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://pdfswitch.com/api/v1/convert</code></p>
+<h3 id='body-parameters'>BODY Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>source</td>
+<td>string(raw HTML or URL)</td>
+<td><b>required</b></td>
+<td>The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b><code>https://example.com</code><br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b><code>&lt;html&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/html&gt;</code></td>
+</tr>
+<tr>
+<td>page_ranges</td>
+<td>string</td>
+<td>null</td>
+<td>Returns only specified pages of the PDF document. If not provided, it will return all pages.<br><b>Pattern: </b><code>1&#124;5-6</code></td>
+</tr>
+<tr>
+<td>page_orientation</td>
+<td>string</td>
+<td>portrait</td>
+<td>Page Orientation<br><b>Pattern: </b><code>portrait&#124;landscape</code></td>
+</tr>
+<tr>
+<td>page_format</td>
+<td>string</td>
+<td>A4</td>
+<td>Page size for converted pdf<br><b>Pattern: </b><code>Letter&#124;Legal&#124;Tabloid&#124;Ledger&#124;A0&#124;A1&#124;A2&#124;A3&#124;A4&#124;A5&#124;A6</code></td>
+</tr>
+<tr>
+<td>page_width</td>
+<td>string</td>
+<td>null</td>
+<td>Custom pdf page width. Use it together with custom <code>page_height</code>. <br>Unit can be one of <code>px&#124;in&#124;mm&#124;cm</code>.<br><b>Pattern: </b><code>NUM[px&#124;in&#124;mm&#124;cm]</code><br><b>Example: </b><code>600px</code><aside class="warning">Cannot be used together with <code>page_format</code>. Prefer to use <code>page_format</code> if you don&#39;t have an exact page size requirement.</aside></td>
+</tr>
+<tr>
+<td>page_height</td>
+<td>string</td>
+<td>null</td>
+<td>Custom pdf page width. Use it together with custom <code>page_width</code>. <br>Unit can be one of <code>px&#124;in&#124;mm&#124;cm</code>.<br><b>Pattern: </b><code>NUM[px&#124;in&#124;mm&#124;cm]</code><br><b>Example: </b><code>600px</code><aside class="warning">Cannot be used together with <code>page_format</code>. Prefer to use <code>page_format</code> if you don&#39;t have an exact page size requirement.</aside></td>
+</tr>
+<tr>
+<td>emulate_media</td>
+<td>string</td>
+<td>screen</td>
+<td>Force CSS media emulation for print or screen.<br><b>Pattern: </b><code>screen&#124;print</code></td>
+</tr>
+<tr>
+<td>margins</td>
+<td>string</td>
+<td>true</td>
+<td>If set to false, the result will include kittens that have already been adopted.</td>
+</tr>
+<tr>
+<td>zoom</td>
+<td>number</td>
+<td>1</td>
+<td>Allows you to increase the zoom in the document. <strong>It should be a float value between 0.1 and 2.</strong> <br>For example, the default 1 means 100% zoom(original state) on the document, 2 means 200% zoom, 0.1 means 10% zoom and so on.</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>include_cats</td>
+<td>false</td>
+<td>If set to true, the result will also include cats.</td>
+<td></td>
+</tr>
+<tr>
+<td>available</td>
+<td>true</td>
+<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id='credits'>Credits</h1><h1 id='examples'>Examples</h1><h2 id='example'>Example</h2>
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
@@ -279,17 +413,11 @@ curl <span class="s2">"api_endpoint_here"</span>
 <blockquote>
 <p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
 </blockquote>
-
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
+<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2>
 <p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
 
 <p><code>Authorization: meowmeowmeow</code></p>
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
 
 <span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
 <span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
@@ -325,7 +453,7 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
+<h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET http://example.com/api/kittens</code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
@@ -379,7 +507,7 @@ Remember — a happy kitten is an authenticated kitten!
 <p>This endpoint retrieves a specific kitten.</p>
 
 <aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
+<h3 id='http-request-3'>HTTP Request</h3>
 <p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
@@ -418,7 +546,7 @@ Remember — a happy kitten is an authenticated kitten!
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint deletes a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
+<h3 id='http-request-4'>HTTP Request</h3>
 <p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
 <h3 id='url-parameters-2'>URL Parameters</h3>
 <table><thead>
