@@ -51,10 +51,7 @@ under the License.
       </span>
     </a>
     <div class="toc-wrapper">
-      <% if false %>
-        <%= image_tag "logo.png", class: 'logo' %>
-      <% end %>
-      <h1>PDFSwitch</h1>
+      <%= image_tag "logo-white.png", class: 'logo' %>
       <% if language_tabs.any? %>
         <div class="lang-selector">
           <% language_tabs.each do |lang| %>
@@ -99,6 +96,9 @@ under the License.
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
+        <div class="intro">
+          <%= image_tag "docs-header.svg", class: 'docs-header' %>
+        </div>
         <%= page_content %>
       </div>
       <div class="dark-box">

@@ -52,7 +52,7 @@ You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 
 ## Convert to PDF
 
-This is the main endpoint of PDFSwitch's API. Simply pass your raw HTML OR URL to us and get a PDF in return.
+This is the main endpoint of PDFSwitch's API. Simply pass your raw HTML or URL to us and get a PDF in return.
 
 ### HTTP Request
 

@@ -91,8 +91,9 @@ body {
   // This is the logo at the top of the ToC
   .logo {
     display: block;
-    max-width: 100%;
+    max-width: calc(100% - 80px);
     margin-bottom: $logo-margin;
+    padding: 40px;
   }
 
   & > .search {
@@ -344,6 +345,19 @@ body {
   // to place content above the dark box
   position: relative;
   z-index: 30;
+
+  .intro {
+    margin-right: 42%;
+    background: white;
+
+    img {
+      margin-bottom: 30px;
+      display: block;
+      min-width: 100%;
+      height: auto;
+      width: 100%;
+    }
+  }
 
   &:after {
     content: "";
@@ -649,6 +663,11 @@ body {
 @media (max-width: $phone-width) {
   .dark-box {
     display: none;
+  }
+  .content {
+    .intro {
+      margin-right: 0;
+    }
   }
 
   %left-col {
