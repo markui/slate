@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="797px" height="265px" viewBox="0 0 797 265" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="797px" height="264px" viewBox="0 0 797 264" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
     <title>docs-header</title>
     <desc>Created with Sketch.</desc>
@@ -21,13 +21,13 @@
         </linearGradient>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Desktop" transform="translate(-115.000000, -2185.000000)">
-            <g id="docs-header" transform="translate(115.000000, 2185.000000)">
+        <g id="Desktop" transform="translate(-115.000000, -2186.000000)">
+            <g id="docs-header" transform="translate(115.000000, 2186.000000)">
                 <g id="background">
-                    <polygon id="Shape" fill="url(#linearGradient-1)" points="0 1 797 1 797 265 0 265"></polygon>
-                    <polygon id="Shape" fill="url(#linearGradient-2)" points="0 0 206.5 0 797 0 797 264 0 264"></polygon>
+                    <polygon id="Shape" fill="url(#linearGradient-1)" points="0 0 797 0 797 264 0 264"></polygon>
+                    <polygon id="Shape" fill-opacity="0.7" fill="url(#linearGradient-2)" points="0 0 206.5 0 797 0 797 264 0 264"></polygon>
                 </g>
-                <g id="content" transform="translate(0.000000, 1.000000)">
+                <g id="content">
                     <mask id="mask-4" fill="white">
                         <use xlink:href="#path-3"></use>
                     </mask>
