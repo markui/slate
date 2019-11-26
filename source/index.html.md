@@ -30,13 +30,15 @@ The PDFSwitch API enables the following operations:
 - Get result PDF in binary format OR saved in AWS S3 storage
 - Customization of your PDF with css, javascript, headers/footers and much more
 
+Below is a simple picture of how PDFSwitch works.
+
+We use a browser-based PDF render engine, that makes our result PDFs have high fidelity, just like your originial document. This is different from old PDF render engines out there, which use old, outdated parsing engines which may result in a PDF different from your original document.
+
+Also, to provide our service at reasonable price, we use serverless technology on our backend. For this reason, **the first request you are making may be slower than the following subsequent requests**, as there is a cold start time, to warm our servers.
+
+![docs-architecture](images/docs-architecture.svg)
+
 If you have further questions or feedback you would like to share with us, always feel free to contact us at <support@pdfswitch.io>. We would love to hear from you :)
-
-> API Endpoint
-
-```
-https://pdfswitch.com/api/v1/switch
-```
 
 ## Getting an API Key
 
@@ -220,7 +222,7 @@ json_response = response.json()
 
 This feature is useful when you don't want to hold a large binary PDF in memory in your server but to just serve the storage URL to users for download.
 
-<aside class="warning">The PDF document will be stored for 2 days in AWS S3 before being automatically deleted.</aside>
+<aside class="warning">The PDF document will be stored for **2 days** in AWS S3 before being automatically deleted.</aside>
 
 # Credits
 

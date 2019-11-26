@@ -295,13 +295,16 @@ PDFSwitch provides a simple and robust REST-ful API to integrate HTML to PDF con
 <li>Customization of your PDF with css, javascript, headers/footers and much more</li>
 </ul>
 
-<p>If you have further questions or feedback you would like to share with us, always feel free to contact us at <a href="mailto:support@pdfswitch.io">support@pdfswitch.io</a>. We would love to hear from you :)</p>
+<p>Below is a simple picture of how PDFSwitch works.</p>
 
-<blockquote>
-<p>API Endpoint</p>
-</blockquote>
-<pre class="highlight plaintext"><code>https://pdfswitch.com/api/v1/switch
-</code></pre><h2 id='getting-an-api-key'>Getting an API Key</h2>
+<p>We use a browser-based PDF render engine, that makes our result PDFs have high fidelity, just like your originial document. This is different from old PDF render engines out there, which use old, outdated parsing engines which may result in a PDF different from your original document.</p>
+
+<p>Also, to provide our service at reasonable price, we use serverless technology on our backend. For this reason, <strong>the first request you are making may be slower than the following subsequent requests</strong>, as there is a cold start time, to warm our servers.</p>
+
+<p><img src="images/docs-architecture.svg" alt="docs-architecture" /></p>
+
+<p>If you have further questions or feedback you would like to share with us, always feel free to contact us at <a href="mailto:support@pdfswitch.io">support@pdfswitch.io</a>. We would love to hear from you :)</p>
+<h2 id='getting-an-api-key'>Getting an API Key</h2>
 <p>PDFSwitch uses API keys to allow access to the API. You can find your API keys on your <a href="https://pdfswitch.io/dashboard">Dashboad</a>, which you can access by <a href="https://pdfswitch.io/login">logging in</a> or <a href="https://pdfswitch.io/signup">signing up</a>.</p>
 <h2 id='authentication'>Authentication</h2>
 <p>PDFSwitch expects the API key to be included in all API requests to the server via <a href="https://tools.ietf.org/html/rfc6750">HTTP Bearer Auth Scheme</a>. Provide your API key in the <code>Authorization</code> header with the <code>Bearer</code> authentication scheme.</p>
@@ -619,7 +622,7 @@ Custom header and footer are <b>independent</b> from the original document(<code
 <h4 id='when-is-this-useful'>When is this useful?</h4>
 <p>This feature is useful when you don&#39;t want to hold a large binary PDF in memory in your server but to just serve the storage URL to users for download.</p>
 
-<aside class="warning">The PDF document will be stored for 2 days in AWS S3 before being automatically deleted.</aside>
+<aside class="warning">The PDF document will be stored for **2 days** in AWS S3 before being automatically deleted.</aside>
 <h1 id='credits'>Credits</h1>
 <blockquote>
 <p>To authorize, use this code:</p>
