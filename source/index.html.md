@@ -52,8 +52,6 @@ PDFSwitch expects the API key to be included in all API requests to the server v
 You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 </aside>
 
-## Errors
-
 # Conversion API
 
 ## Convert to PDF
@@ -128,9 +126,9 @@ Options on manipulating requests before render.
 
 Options for using 3rd Party Storage(AWS S3) for rendered PDFs.
 
-| Parameter | Type   | Default | Description |
-| --------- | ------ | ------- | ----------- |
-| filename  | string | null    |             |
+| Parameter | Type   | Default | Description                                                                                                                                                                                                                                                                          |
+| --------- | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| filename  | string | null    | If a filename is specified, PDFSwitch will not return a binary PDF but store the PDF in a AWS S3 storage and return the storage URL. See <a href="#saving-the-document-to-amazon-s3">Saving the document to Amazon S3</a> section for more details. <br><b>Example: </b>`result.pdf` |
 
 ### Custom Header/Footer
 
@@ -145,7 +143,7 @@ We refer to the html strings you pass as **HTML Templates** because you can use 
 
 #### Header/Footer Template Classnames
 
-> Custom header/footer
+> Custom Header/Footer
 
 ```python
 import requests
@@ -168,6 +166,8 @@ with open('result.pdf', 'wb') as output:
         output.write(chunk)
 ```
 
+> The above command returns a PDF in binary format.
+
 These are the predefined classnames that you can use for dynamic data.
 
 | Classname  | Description                           |
@@ -184,11 +184,43 @@ Note that custom header/footer are automatically added to all pages. Also, you *
 
 We have provided examples of how to perform PDF conversions using our API in various use cases.<br>Please report problems or request new examples via <support@pdfswitch.io>.
 
-## Example 1
+## Saving the document to Amazon S3
 
-## Example 2
+```python
+import requests
 
-## Example 3
+response = requests.post(
+    'https://pdfswitch.io/v1/convert',
+    headers={'Authorization': YOUR_API_KEY }
+    json={
+      'source': 'https://www.wikipedia.org/',
+      'filename': 'wiki.pdf'
+    }
+)
+
+response.raise_for_status()
+
+json_response = response.json()
+# the filesize unit is MB.
+# You can use this to figure out what pricing plan suits you best.
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "url": "https://pdfswitch.s3.us-west-1.amazonaws.com/pdfswitch/d/2/2019-11/46301658ad7e4ace8f97903ac53d88e6/wiki.pdf",
+  "filesize": 0.797048
+}
+```
+
+[Amazon Simple Storage Service(Amazon S3)](https://aws.amazon.com/s3/) is an object storage service to store data. By passing the `filename` parameter, PDFSwitch won't return a binary PDF, but upload the PDF to AWS S3 and return an URL to the storage location.
+
+#### When is this useful?
+
+This feature is useful when you don't want to hold a large binary PDF in memory in your server but to just serve the storage URL to users for download.
+
+<aside class="warning">The PDF document will be stored for 2 days in AWS S3 before being automatically deleted.</aside>
 
 # Credits
 

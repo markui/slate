@@ -233,9 +233,6 @@
                   <li>
                     <a href="#authentication" class="toc-h2 toc-link" data-title="Authentication">Authentication</a>
                   </li>
-                  <li>
-                    <a href="#errors" class="toc-h2 toc-link" data-title="Errors">Errors</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -250,13 +247,7 @@
             <a href="#examples" class="toc-h1 toc-link" data-title="Examples">Examples</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#example-1" class="toc-h2 toc-link" data-title="Example 1">Example 1</a>
-                  </li>
-                  <li>
-                    <a href="#example-2" class="toc-h2 toc-link" data-title="Example 2">Example 2</a>
-                  </li>
-                  <li>
-                    <a href="#example-3" class="toc-h2 toc-link" data-title="Example 3">Example 3</a>
+                    <a href="#saving-the-document-to-amazon-s3" class="toc-h2 toc-link" data-title="Saving the document to Amazon S3">Saving the document to Amazon S3</a>
                   </li>
               </ul>
           </li>
@@ -320,7 +311,7 @@ PDFSwitch provides a simple and robust REST-ful API to integrate HTML to PDF con
 <aside class="notice">
 You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 </aside>
-<h2 id='errors'>Errors</h2><h1 id='conversion-api'>Conversion API</h1><h2 id='convert-to-pdf'>Convert to PDF</h2>
+<h1 id='conversion-api'>Conversion API</h1><h2 id='convert-to-pdf'>Convert to PDF</h2>
 <p>This is the main endpoint of PDFSwitch&#39;s API. Simply pass your raw HTML or URL to us and get a PDF in return.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://pdfswitch.com/api/v1/convert</code></p>
@@ -513,7 +504,7 @@ You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 </tr>
 </tbody></table>
 <h4 id='6-storage-options'>6. Storage Options</h4>
-<p>Options for utilizing 3rd Party Storage(AWS S3) for rendered PDFs</p>
+<p>Options for using 3rd Party Storage(AWS S3) for rendered PDFs.</p>
 
 <table><thead>
 <tr>
@@ -525,9 +516,9 @@ You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 </thead><tbody>
 <tr>
 <td>filename</td>
-<td>string(raw HTML or URL)</td>
-<td><b>required</b></td>
-<td>The target document to convert to PDF.<br>1. URL Format: The URL of a web page you want to convert.<br><b>Example: </b><code>https://example.com</code><br>2. Raw HTML Format: Raw HTML string of a page that you want to convert.<br><b>Example: </b><code>&lt;html&gt;&lt;h1&gt;Test&lt;/h1&gt;&lt;/html&gt;</code></td>
+<td>string</td>
+<td>null</td>
+<td>If a filename is specified, PDFSwitch will not return a binary PDF but store the PDF in a AWS S3 storage and return the storage URL. See <a href="#saving-the-document-to-amazon-s3">Saving the document to Amazon S3</a> section for more details. <br><b>Example: </b><code>result.pdf</code></td>
 </tr>
 </tbody></table>
 <h3 id='custom-header-footer'>Custom Header/Footer</h3>
@@ -541,7 +532,7 @@ Custom header and footer are <b>independent</b> from the original document(<code
 <p>We refer to the html strings you pass as <strong>HTML Templates</strong> because you can use the below predefined template variables in your html strings. For example, if you want to display the current page number in your PDF pages, you can simply use a placeholder element like <code>&lt;span class=&quot;pageNumber&quot;&gt;&lt;/span&gt;</code>, and our PDF render engine automatically injects the current page number in the <code>pageNumber</code> class element.</p>
 <h4 id='header-footer-template-classnames'>Header/Footer Template Classnames</h4>
 <blockquote>
-<p>Custom header/footer</p>
+<p>Custom Header/Footer</p>
 </blockquote>
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
@@ -562,6 +553,10 @@ Custom header and footer are <b>independent</b> from the original document(<code
     <span class="k">for</span> <span class="n">chunck</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">):</span>
         <span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
 </code></pre>
+<blockquote>
+<p>The above command returns a PDF in binary format.</p>
+</blockquote>
+
 <p>These are the predefined classnames that you can use for dynamic data.</p>
 
 <table><thead>
@@ -595,7 +590,37 @@ Custom header and footer are <b>independent</b> from the original document(<code
 <p>Note that custom header/footer are automatically added to all pages. Also, you <strong>must use <code>margins</code> together with <code>custom_header|custom_footer</code></strong>, to provide top and bottom margins to your page so there is space for the custom header/footer to show up.</p>
 <h1 id='examples'>Examples</h1>
 <p>We have provided examples of how to perform PDF conversions using our API in various use cases.<br>Please report problems or request new examples via <a href="mailto:support@pdfswitch.io">support@pdfswitch.io</a>.</p>
-<h2 id='example-1'>Example 1</h2><h2 id='example-2'>Example 2</h2><h2 id='example-3'>Example 3</h2><h1 id='credits'>Credits</h1>
+<h2 id='saving-the-document-to-amazon-s3'>Saving the document to Amazon S3</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="s">'https://pdfswitch.io/v1/convert'</span><span class="p">,</span>
+    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">YOUR_API_KEY</span> <span class="p">}</span>
+    <span class="n">json</span><span class="o">=</span><span class="p">{</span>
+      <span class="s">'source'</span><span class="p">:</span> <span class="s">'https://www.wikipedia.org/'</span><span class="p">,</span>
+      <span class="s">'filename'</span><span class="p">:</span> <span class="s">'wiki.pdf'</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+<span class="n">json_response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="c"># the filesize unit is MB.</span>
+<span class="c"># You can use this to figure out what pricing plan suits you best.</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://pdfswitch.s3.us-west-1.amazonaws.com/pdfswitch/d/2/2019-11/46301658ad7e4ace8f97903ac53d88e6/wiki.pdf"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"filesize"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.797048</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p><a href="https://aws.amazon.com/s3/">Amazon Simple Storage Service(Amazon S3)</a> is an object storage service to store data. By passing the <code>filename</code> parameter, PDFSwitch won&#39;t return a binary PDF, but upload the PDF to AWS S3 and return an URL to the storage location.</p>
+<h4 id='when-is-this-useful'>When is this useful?</h4>
+<p>This feature is useful when you don&#39;t want to hold a large binary PDF in memory in your server but to just serve the storage URL to users for download.</p>
+
+<aside class="warning">The PDF document will be stored for 2 days in AWS S3 before being automatically deleted.</aside>
+<h1 id='credits'>Credits</h1>
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
