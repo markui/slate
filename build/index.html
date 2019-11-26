@@ -344,13 +344,13 @@ You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 <td>page_orientation</td>
 <td>string</td>
 <td>portrait</td>
-<td>Page orientation<br><b>Pattern: </b><code>portrait&#124;landscape</code><br>cf) <a href="https://en.wikipedia.org/wiki/Page_orientation#/media/File:800x518_smartphone_portrait_vs_landscape_orientation.png" target="_blank">Portrait vs Landscape</a></td>
+<td>Page orientation<br><b>Enum: </b><code>portrait&#124;landscape</code><br>cf) <a href="https://en.wikipedia.org/wiki/Page_orientation#/media/File:800x518_smartphone_portrait_vs_landscape_orientation.png" target="_blank">Portrait vs Landscape</a></td>
 </tr>
 <tr>
 <td>page_format</td>
 <td>string</td>
 <td>A4</td>
-<td>Page size for converted pdf<br><b>Pattern: </b><code>Letter&#124;Legal&#124;Tabloid&#124;Ledger&#124;A0&#124;A1&#124;A2&#124;A3&#124;A4&#124;A5&#124;A6</code><br>cf) <a href="https://www.engineeringtoolbox.com/drawing-sheet-sizes-d_108.html" target="_blank">A0~A6 Sizes</a>, <a href="https://www.engineeringtoolbox.com/office-paper-sizes-d_213.html" target="_blank">Letter~Ledger Sizes</a></td>
+<td>Page size for converted pdf<br><b>Enum: </b><code>Letter&#124;Legal&#124;Tabloid&#124;Ledger&#124;A0&#124;A1&#124;A2&#124;A3&#124;A4&#124;A5&#124;A6</code><br>cf) <a href="https://www.engineeringtoolbox.com/drawing-sheet-sizes-d_108.html" target="_blank">A0~A6 Sizes</a>, <a href="https://www.engineeringtoolbox.com/office-paper-sizes-d_213.html" target="_blank">Letter~Ledger Sizes</a></td>
 </tr>
 <tr>
 <td>page_width</td>
@@ -368,7 +368,7 @@ You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 <td>emulate_media</td>
 <td>string</td>
 <td>screen</td>
-<td>Force CSS media emulation for print or screen. The print option controls how your page looks when printed.<br><b>Pattern: </b><code>screen&#124;print</code></td>
+<td>Force CSS media emulation for print or screen. The print option controls how your page looks when printed.<br><b>Enum: </b><code>screen&#124;print</code></td>
 </tr>
 <tr>
 <td>margins</td>
@@ -482,7 +482,7 @@ You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 <td>wait_for_function</td>
 <td>string</td>
 <td>null</td>
-<td>Name of a globally available function(assigned in the <code>window</code> scope). Waits until the function returns a truthy value(boolean true, 1, etc). Times out after 10 seconds.</td>
+<td>Name of a globally available function(assigned in the <code>window</code> scope). Waits until the function returns a truthy value(boolean true, 1, etc). Times out after 10 seconds.<br><b>Example: </b><code>someFunctionName</code></td>
 </tr>
 </tbody></table>
 <h4 id='5-request-options'>5. Request Options</h4>
