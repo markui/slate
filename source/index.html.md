@@ -222,7 +222,7 @@ json_response = response.json()
 
 This feature is useful when you don't want to hold a large binary PDF in memory in your server but to just serve the storage URL to users for download.
 
-<aside class="warning">The PDF document will be stored for **2 days** in AWS S3 before being automatically deleted.</aside>
+<aside class="warning">The PDF document will be stored for <b>2 days</b> in AWS S3 before being automatically deleted.</aside>
 
 # Credits
 
