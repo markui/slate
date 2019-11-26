@@ -36,7 +36,7 @@ We use a browser-based PDF render engine, that makes our result PDFs have high f
 
 Also, to provide our service at reasonable price, we use serverless technology on our backend. For this reason, **the first request you are making may be slower than the following subsequent requests**, as there is a cold start time, to warm our servers.
 
-![docs-architecture](images/docs-architecture.svg)
+![docs-architecture](images/docs-architecture.png)
 
 If you have further questions or feedback you would like to share with us, always feel free to contact us at <support@pdfswitch.io>. We would love to hear from you :)
 
