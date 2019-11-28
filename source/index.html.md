@@ -46,7 +46,7 @@ PDFSwitch uses API keys to allow access to the API. You can find your API keys o
 
 ## Authentication
 
-PDFSwitch expects the API key to be included in all API requests to the server via [HTTP Bearer Auth Scheme](https://tools.ietf.org/html/rfc6750). Provide your API key in the `Authorization` header with the `Bearer` authentication scheme.
+PDFSwitch expects the API key to be included in all API requests to the server via [HTTP Bearer Auth Scheme](https://tools.ietf.org/html/rfc6750). Provide your API key in the `Authorization` header with the `Bearer` authentication scheme, with a single space in between the `Bearer` and `YOUR_API_KEY`.
 
 `Authorization: Bearer YOUR_PDFSWITCH_API_KEY`
 
@@ -62,7 +62,7 @@ This is the main endpoint of PDFSwitch's API. Simply pass your raw HTML or URL t
 
 ### HTTP Request
 
-`POST https://pdfswitch.com/api/v1/convert`
+`POST https://pdfswitch.io/api/convert`
 
 ### BODY Parameters
 
@@ -151,8 +151,8 @@ We refer to the html strings you pass as **HTML Templates** because you can use 
 import requests
 
 response = requests.post(
-    'https://pdfswitch.io/v1/convert',
-    headers={'Authorization': YOUR_API_KEY }
+    'https://pdfswitch.io/api/convert',
+    headers={'Authorization': Bearer YOUR_API_KEY },
     json={'source': 'https://www.wikipedia.org/',
     # use margins with custom header/footer
     'margins': {'top': '50px', 'bottom': '50px'},
@@ -192,8 +192,8 @@ We have provided examples of how to perform PDF conversions using our API in var
 import requests
 
 response = requests.post(
-    'https://pdfswitch.io/v1/convert',
-    headers={'Authorization': YOUR_API_KEY }
+    'https://pdfswitch.io/api/convert',
+    headers={'Authorization': Bearer YOUR_API_KEY },
     json={
       'source': 'https://www.wikipedia.org/',
       'filename': 'wiki.pdf'

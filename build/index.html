@@ -310,7 +310,7 @@ PDFSwitch provides a simple and robust REST-ful API to integrate HTML to PDF con
 <h2 id='getting-an-api-key'>Getting an API Key</h2>
 <p>PDFSwitch uses API keys to allow access to the API. You can find your API keys on your <a href="https://pdfswitch.io/dashboard">Dashboad</a>, which you can access by <a href="https://pdfswitch.io/login">logging in</a> or <a href="https://pdfswitch.io/signup">signing up</a>.</p>
 <h2 id='authentication'>Authentication</h2>
-<p>PDFSwitch expects the API key to be included in all API requests to the server via <a href="https://tools.ietf.org/html/rfc6750">HTTP Bearer Auth Scheme</a>. Provide your API key in the <code>Authorization</code> header with the <code>Bearer</code> authentication scheme.</p>
+<p>PDFSwitch expects the API key to be included in all API requests to the server via <a href="https://tools.ietf.org/html/rfc6750">HTTP Bearer Auth Scheme</a>. Provide your API key in the <code>Authorization</code> header with the <code>Bearer</code> authentication scheme, with a single space in between the <code>Bearer</code> and <code>YOUR_API_KEY</code>.</p>
 
 <p><code>Authorization: Bearer YOUR_PDFSWITCH_API_KEY</code></p>
 
@@ -320,7 +320,7 @@ You must replace <code>YOUR_PDFSWITCH_API_KEY</code> with your personal API key.
 <h1 id='conversion-api'>Conversion API</h1><h2 id='convert-to-pdf'>Convert to PDF</h2>
 <p>This is the main endpoint of PDFSwitch&#39;s API. Simply pass your raw HTML or URL to us and get a PDF in return.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>POST https://pdfswitch.com/api/v1/convert</code></p>
+<p><code>POST https://pdfswitch.io/api/convert</code></p>
 <h3 id='body-parameters'>BODY Parameters</h3>
 <p>All parameters should be passed as a JSON object. We grouped the parameters into sections by their main usage.</p>
 <h4 id='1-main-options'>1. Main Options</h4>
@@ -543,8 +543,8 @@ Custom header and footer are <b>independent</b> from the original document(<code
 <pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="s">'https://pdfswitch.io/v1/convert'</span><span class="p">,</span>
-    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">YOUR_API_KEY</span> <span class="p">}</span>
+    <span class="s">'https://pdfswitch.io/api/convert'</span><span class="p">,</span>
+    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">Bearer</span> <span class="n">YOUR_API_KEY</span> <span class="p">},</span>
     <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s">'source'</span><span class="p">:</span> <span class="s">'https://www.wikipedia.org/'</span><span class="p">,</span>
     <span class="c"># use margins with custom header/footer</span>
     <span class="s">'margins'</span><span class="p">:</span> <span class="p">{</span><span class="s">'top'</span><span class="p">:</span> <span class="s">'50px'</span><span class="p">,</span> <span class="s">'bottom'</span><span class="p">:</span> <span class="s">'50px'</span><span class="p">},</span>
@@ -599,8 +599,8 @@ Custom header and footer are <b>independent</b> from the original document(<code
 <h2 id='saving-the-document-to-amazon-s3'>Saving the document to Amazon S3</h2><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-    <span class="s">'https://pdfswitch.io/v1/convert'</span><span class="p">,</span>
-    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">YOUR_API_KEY</span> <span class="p">}</span>
+    <span class="s">'https://pdfswitch.io/api/convert'</span><span class="p">,</span>
+    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">'Authorization'</span><span class="p">:</span> <span class="n">Bearer</span> <span class="n">YOUR_API_KEY</span> <span class="p">},</span>
     <span class="n">json</span><span class="o">=</span><span class="p">{</span>
       <span class="s">'source'</span><span class="p">:</span> <span class="s">'https://www.wikipedia.org/'</span><span class="p">,</span>
       <span class="s">'filename'</span><span class="p">:</span> <span class="s">'wiki.pdf'</span>
