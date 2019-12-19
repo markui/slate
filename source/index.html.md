@@ -2,14 +2,14 @@
 title: Documentation
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - javascript
   - python
-  - ruby
+  - javascript
+  
 
 toc_footers:
-  - <a href='https://pdfswitch.io/signup'>Signup for PDFSwitch</a>
-  - <support@pdfswitch.io>
+  - <a href='https://pdfswitch.io/signup' target='_blank'>Signup for PDFSwitch</a>
+  - <a href='https://pdfswitch.io/dashboard' target='_blank'>Go to Dashboard</a>
+  - <a href="mailto:support@pdfswitch.io">support@pdfswitch.io</a>
 
 includes:
   - errors
@@ -20,6 +20,12 @@ search: true
 # Getting Started
 
 ## Overview
+
+> API Endpoint
+
+```
+https://pdfswitch.io/api/
+```
 
 Welcome to PDFSwitch!
 PDFSwitch provides a simple and robust REST-ful API to integrate HTML to PDF conversion technology into your existing applications and services.
@@ -168,6 +174,35 @@ with open('result.pdf', 'wb') as output:
         output.write(chunk)
 ```
 
+```javascript
+// example in a Node.js env
+const request = require('request');
+const fs = require('fs');
+
+const options = {
+  url: 'https://pdfswitch.io/api/convert/',
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY' // Replace it with your API Key
+  },
+  body: {
+    source: 'https://www.wikipedia.org/',
+    page_orientation: 'portrait'
+  },
+  json: true,
+  encoding: null // this makes the below body a Buffer
+};
+
+request.post(options, function (err, response, body) {
+  if (!err && response.statusCode == 200) {
+    //do something with PDF Buffer
+    fs.writeFile('result.pdf', body, function (err) {
+      if(err) return console.error('writeFile error:', err);
+    })
+  } else return console.error('request error:', err);
+})
+```
+
 > The above command returns a PDF in binary format.
 
 These are the predefined classnames that you can use for dynamic data.
@@ -204,7 +239,34 @@ response.raise_for_status()
 
 json_response = response.json()
 # the filesize unit is MB.
-# You can use this to figure out what pricing plan suits you best.
+```
+
+```javascript
+// example in a Node.js env
+const request = require('request');
+const fs = require('fs');
+
+const options = {
+  url: 'https://pdfswitch.io/api/convert/',
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY' // Replace it with your API Key
+  },
+  body: {
+    source: 'https://www.wikipedia.org/',
+    filename: 'wiki.pdf'
+  },
+  json: true
+};
+
+request.post(options, function (err, response, body) {
+  if (!err && response.statusCode == 200) {
+    // do something with S3 URL in json
+    // the filesize unit is MB.
+    let json = JSON.parse(body);
+    console.log(json.url);
+  } else return console.error('request error:', err);
+})
 ```
 
 > The above command returns JSON structured like this:
@@ -224,7 +286,7 @@ This feature is useful when you don't want to hold a large binary PDF in memory 
 
 <aside class="warning">The PDF document will be stored for <b>2 days</b> in AWS S3 before being automatically deleted.</aside>
 
-# Credits
+<!-- # Credits
 
 > To authorize, use this code:
 
@@ -428,4 +490,4 @@ This endpoint deletes a specific kitten.
 
 | Parameter | Description                    |
 | --------- | ------------------------------ |
-| ID        | The ID of the kitten to delete |
+| ID        | The ID of the kitten to delete | -->
